@@ -1,14 +1,13 @@
-use bytes::{Buf, BufMut};
 use crate::rpc::api_key::ApiKey;
 use crate::rpc::api_version::ApiVersion;
 use crate::rpc::frame::{ReadError, WriteError};
 use crate::rpc::message::{ReadVersionedType, WriteVersionedType};
+use bytes::{Buf, BufMut};
 
 const REQUEST_HEADER_LENGTH: i32 = 8;
 const SUCCESS_RESPONSE: u8 = 0;
 const ERROR_RESPONSE: u8 = 1;
 const SERVER_FAILURE: u8 = 2;
-
 
 #[derive(Debug, PartialEq, Eq)]
 pub struct RequestHeader {
@@ -26,18 +25,13 @@ impl<W> WriteVersionedType<W> for RequestHeader
 where
     W: BufMut,
 {
-    fn write_versioned(
-        &self,
-        writer: &mut W,
-        version: ApiVersion,
-    ) -> Result<(), WriteError> {
+    fn write_versioned(&self, writer: &mut W, version: ApiVersion) -> Result<(), WriteError> {
         writer.put_i16(self.request_api_key.into());
         writer.put_i16(self.request_api_version.0);
         writer.put_i32(self.request_id);
         Ok(())
     }
 }
-
 
 #[derive(Debug, PartialEq, Eq)]
 pub struct ResponseHeader {
