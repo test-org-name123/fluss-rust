@@ -1,9 +1,9 @@
-use std::sync::Arc;
 use crate::client::connection::FlussConnection;
 use crate::client::metadata::Metadata;
 use crate::client::table::append::TableAppend;
 use crate::client::table::scanner::TableScan;
 use crate::metadata::{TableInfo, TablePath};
+use std::sync::Arc;
 
 use crate::error::Result;
 

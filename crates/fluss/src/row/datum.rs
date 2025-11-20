@@ -1,5 +1,6 @@
 use chrono::Datelike;
 
+use crate::error::Error::RowConvertError;
 use crate::error::Result;
 use arrow::array::{ArrayBuilder, Int8Builder, Int16Builder, Int32Builder, StringBuilder};
 use chrono::NaiveDate;
@@ -10,7 +11,6 @@ use rust_decimal::Decimal;
 use serde::{Deserialize, Serialize};
 use std::fmt;
 use std::ops::Deref;
-use crate::error::Error::RowConvertError;
 
 const THIRTY_YEARS_MICROSECONDS: i64 = 946_684_800_000_000;
 
