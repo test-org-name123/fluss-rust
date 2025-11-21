@@ -1,15 +1,15 @@
+use crate::client::connection::FlussConnection;
+use crate::client::metadata::Metadata;
+use crate::error::Result;
+use crate::metadata::{TableBucket, TableInfo, TablePath};
+use crate::proto::{FetchLogRequest, PbFetchLogReqForBucket, PbFetchLogReqForTable};
+use crate::record::{LogRecordsBatchs, ReadContext, ScanRecord, ScanRecords, to_arrow_schema};
+use crate::rpc::RpcClient;
+use crate::util::FairBucketStatusMap;
 use std::cell::Cell;
 use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
 use std::time::Duration;
-use crate::client::connection::FlussConnection;
-use crate::client::metadata::Metadata;
-use crate::metadata::{TableBucket, TableInfo, TablePath};
-use crate::record::{to_arrow_schema, LogRecordsBatchs, ReadContext, ScanRecord, ScanRecords};
-use crate::rpc::RpcClient;
-use crate::error::Result;
-use crate::proto::{FetchLogRequest, PbFetchLogReqForBucket, PbFetchLogReqForTable};
-use crate::util::FairBucketStatusMap;
 
 const LOG_FETCH_MAX_BYTES: i32 = 16 * 1024 * 1024;
 const LOG_FETCH_MAX_BYTES_FOR_BUCKET: i32 = 1024;
@@ -123,9 +123,7 @@ impl LogFetcher {
             let con = self.conns.get_connection(server_node).await?;
 
             let fetch_response = con
-                .request(crate::rpc::message::FetchLogRequest::new(
-                    fetch_request,
-                ))
+                .request(crate::rpc::message::FetchLogRequest::new(fetch_request))
                 .await?;
 
             for pb_fetch_log_resp in fetch_response.tables_resp {
@@ -224,8 +222,6 @@ impl LogFetcher {
         cluster.leader_for(tb).map(|leader| leader.id())
     }
 }
-
-
 
 pub struct LogScannerStatus {
     bucket_status_map: Arc<Mutex<FairBucketStatusMap<BucketScanStatus>>>,

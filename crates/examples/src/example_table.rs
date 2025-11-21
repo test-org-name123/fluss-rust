@@ -1,11 +1,11 @@
-use std::time::Duration;
-use tokio::try_join;
+use clap::Parser;
 use fluss::client::FlussConnection;
 use fluss::config::Config;
 use fluss::error::Result;
 use fluss::metadata::{DataTypes, Schema, TableDescriptor, TablePath};
 use fluss::row::{GenericRow, InternalRow};
-use clap::Parser;
+use std::time::Duration;
+use tokio::try_join;
 
 #[tokio::main]
 pub async fn main() -> Result<()> {
