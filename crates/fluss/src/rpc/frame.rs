@@ -15,14 +15,12 @@ pub enum ReadError {
     MessageTooLarge { limit: usize, actual: usize },
 }
 
-
 pub trait AsyncMessageRead {
     fn read_message(
         &mut self,
         max_message_size: usize,
     ) -> impl Future<Output = Result<Vec<u8>, ReadError>> + Send;
 }
-
 
 impl<R> AsyncMessageRead for R
 where

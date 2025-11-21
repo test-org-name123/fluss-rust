@@ -1,7 +1,3 @@
-use std::collections::HashMap;
-use std::sync::Arc;
-use std::time::Duration;
-use parking_lot::Mutex;
 use crate::client::metadata::Metadata;
 use crate::client::{ReadyWriteBatch, RecordAccumulator};
 use crate::error::Error::WriteError;
@@ -9,6 +5,10 @@ use crate::error::Result;
 use crate::metadata::TableBucket;
 use crate::proto::ProduceLogResponse;
 use crate::rpc::ProduceLogRequest;
+use parking_lot::Mutex;
+use std::collections::HashMap;
+use std::sync::Arc;
+use std::time::Duration;
 
 pub struct Sender {
     running: bool,
@@ -58,12 +58,7 @@ impl Sender {
         // Update metadata if needed
         if !ready_check_result.unknown_leader_tables.is_empty() {
             self.metadata
-                .update_tables_metadata(
-                    &ready_check_result
-                        .unknown_leader_tables
-                        .iter()
-                        .collect(),
-                )
+                .update_tables_metadata(&ready_check_result.unknown_leader_tables.iter().collect())
                 .await?;
         }
 
@@ -71,7 +66,7 @@ impl Sender {
             tokio::time::sleep(Duration::from_millis(
                 ready_check_result.next_ready_check_delay_ms as u64,
             ))
-                .await;
+            .await;
             return Ok(());
         }
 
