@@ -1,16 +1,15 @@
-use std::sync::Arc;
-use crate::{impl_read_version_type, impl_write_version_type, proto};
+use crate::error::Result as FlussResult;
 use crate::proto::{PbProduceLogReqForBucket, ProduceLogResponse};
 use crate::rpc::api_key::ApiKey;
 use crate::rpc::api_version::ApiVersion;
-use crate::error::Result as FlussResult;
-use crate::rpc::message::{RequestBody, ReadVersionedType, WriteVersionedType};
 use crate::rpc::frame::{ReadError, WriteError};
+use crate::rpc::message::{ReadVersionedType, RequestBody, WriteVersionedType};
+use crate::{impl_read_version_type, impl_write_version_type, proto};
+use std::sync::Arc;
 
-
+use crate::client::ReadyWriteBatch;
 use bytes::{Buf, BufMut};
 use prost::Message;
-use crate::client::ReadyWriteBatch;
 
 pub struct ProduceLogRequest {
     pub inner_request: proto::ProduceLogRequest,
