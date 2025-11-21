@@ -19,10 +19,10 @@ use std::{
 };
 use tokio::io::AsyncReadExt;
 
-use crate::metadata::DataType;
 use crate::error::Result;
-use crate::row::{ColumnarRow, GenericRow};
+use crate::metadata::DataType;
 use crate::record::{ChangeType, ScanRecord};
+use crate::row::{ColumnarRow, GenericRow};
 
 /// const for record batch
 pub const BASE_OFFSET_LENGTH: usize = 8;
