@@ -1,6 +1,6 @@
-use std::sync::Arc;
 use crate::client::{WriteRecord, WriterClient};
 use crate::row::GenericRow;
+use std::sync::Arc;
 
 use crate::error::Result;
 use crate::metadata::{TableInfo, TablePath};

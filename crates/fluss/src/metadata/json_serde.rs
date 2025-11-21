@@ -6,9 +6,9 @@ use serde_json::{Value, json};
 use std::collections::HashMap;
 
 pub trait JsonSerde: Sized {
-     fn serialize_json(&self) -> Result<Value>;
+    fn serialize_json(&self) -> Result<Value>;
 
-     fn deserialize_json(node: &Value) -> Result<Self>;
+    fn deserialize_json(node: &Value) -> Result<Self>;
 }
 
 impl DataType {
@@ -300,7 +300,7 @@ impl TableDescriptor {
 }
 
 impl JsonSerde for TableDescriptor {
-     fn serialize_json(&self) -> Result<Value> {
+    fn serialize_json(&self) -> Result<Value> {
         let mut obj = serde_json::Map::new();
 
         // Serialize version

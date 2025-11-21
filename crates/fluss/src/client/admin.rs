@@ -1,12 +1,11 @@
-use std::sync::Arc;
 use crate::client::metadata::Metadata;
 use crate::metadata::{JsonSerde, TableDescriptor, TableInfo, TablePath};
+use crate::rpc::message::{CreateTableRequest, GetTableRequest};
 use crate::rpc::{RpcClient, ServerConnection};
-use crate::rpc::message::{GetTableRequest, CreateTableRequest};
-
+use std::sync::Arc;
 
 use crate::error::Result;
-use crate::proto::{ GetTableInfoResponse};
+use crate::proto::GetTableInfoResponse;
 
 pub struct FlussAdmin {
     admin_gateway: ServerConnection,

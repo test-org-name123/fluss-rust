@@ -1,7 +1,7 @@
-use std::sync::atomic::{AtomicI32, Ordering};
-use rand::Rng;
 use crate::cluster::Cluster;
 use crate::metadata::TablePath;
+use rand::Rng;
+use std::sync::atomic::{AtomicI32, Ordering};
 
 pub trait BucketAssigner: Sync + Send {
     fn abort_if_batch_full(&self) -> bool;

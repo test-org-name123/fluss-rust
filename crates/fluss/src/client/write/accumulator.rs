@@ -1,18 +1,18 @@
+use crate::client::write::batch::WriteBatch::ArrowLog;
+use crate::client::write::batch::{ArrowLogWriteBatch, WriteBatch};
+use crate::client::{ResultHandle, WriteRecord};
+use crate::cluster::{BucketLocation, Cluster, ServerNode};
+use crate::config::Config;
+use crate::error::Result;
+use crate::metadata::{TableBucket, TablePath};
+use crate::util::current_time_ms;
+use crate::{BucketId, PartitionId, TableId};
+use dashmap::DashMap;
+use parking_lot::RwLock;
 use std::collections::{HashMap, HashSet, VecDeque};
 use std::sync::Arc;
 use std::sync::atomic::{AtomicI32, AtomicI64, Ordering};
-use dashmap::DashMap;
-use parking_lot::RwLock;
 use tokio::sync::Mutex;
-use crate::{BucketId, PartitionId, TableId};
-use crate::client::{ResultHandle, WriteRecord};
-use crate::client::write::batch::{ArrowLogWriteBatch, WriteBatch};
-use crate::client::write::batch::WriteBatch::ArrowLog;
-use crate::cluster::{BucketLocation, Cluster, ServerNode};
-use crate::config::Config;
-use crate::metadata::{TableBucket, TablePath};
-use crate::error::Result;
-use crate::util::current_time_ms;
 
 pub struct RecordAccumulator {
     config: Config,
