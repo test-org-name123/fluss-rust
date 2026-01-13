@@ -56,7 +56,6 @@ pub trait InternalRow {
     fn get_bytes(&self, pos: usize) -> Vec<u8>;
 }
 
-
 pub struct GenericRow<'a> {
     pub values: Vec<Datum<'a>>,
 }
